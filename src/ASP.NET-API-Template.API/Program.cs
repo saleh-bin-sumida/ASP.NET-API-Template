@@ -1,23 +1,21 @@
+using ASP.NET_API_Template.API.Middleware;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-
+builder.Services.AddControllersServices();
+builder.Services.AddOpenApiServices();
+builder.Services.AddSwaggerServices();
+builder.Services.AddEFServices(builder.Configuration);
+builder.Services.AddCoreServices();
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
+app.UseOpenApiAndScalar();
+app.UseSwaggerTool();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<RedirectToSwaggerMiddleware>();
+app.UseCors("AllowAll");
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
