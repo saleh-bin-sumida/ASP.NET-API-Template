@@ -1,0 +1,9 @@
+﻿global using ASP.NET_API_Template.Core.DTOs;
+global using ASP.NET_API_Template.Core.Entites;
+global using ASP.NET_API_Template.Core.Interfaces;
+global using ASP.NET_API_Template.Core.Models.Response;
+global using Microsoft.Extensions.DependencyInjection;
+global using System.ComponentModel.DataAnnotations;
+global using System.Linq.Expressions;
+global using System.Reflection;
+global using System.Text.Json.Serialization;
