@@ -12,10 +12,10 @@ public class PagedResult<T>
     public bool HasPreveiosPage => PageNumber > 1;
 
 
-    //public PagedResult()
-    //{
+    public PagedResult()
+    {
 
-    //}
+    }
 
     public PagedResult(int pageSize, int pageNumber, int totalItems, List<T> items)
     {

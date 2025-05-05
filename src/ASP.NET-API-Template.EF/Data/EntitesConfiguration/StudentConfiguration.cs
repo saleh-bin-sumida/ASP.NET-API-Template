@@ -7,8 +7,11 @@ internal class StudentConfiguration : IEntityTypeConfiguration<Student>
         builder.ToTable(TablesNames.Students);
 
 
-        builder.Property(e => e.FullName)
-            .HasMaxLength(100);
+        builder.Property(e => e.FirstName)
+            .HasMaxLength(50);
+
+        builder.Property(e => e.LastName)
+            .HasMaxLength(50);
 
         builder.Property(e => e.PhoneNumber)
             .HasMaxLength(20);

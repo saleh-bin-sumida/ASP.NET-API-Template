@@ -1,12 +1,19 @@
-﻿namespace RepositoryWithUWO.EF.Repositories;
+﻿using Mapster;
+using Microsoft.Extensions.Logging;
 
-public class BaseRepository<T>(AppDbContext _context) : IBaseRepository<T> where T : class
+namespace ASP.NET_API_Template.EF.Repositories;
+
+
+public class BaseRepository<T>(AppDbContext _context, ILogger<BaseRepository<T>> _logger) :
+    IBaseRepository<T> where T : class
 {
+
 
     #region GetByIdAsync Methods
 
     public async Task<T> GetByIdAsync(int id)
     {
+        _logger.LogDebug("Fetching entity of type {EntityType} by ID: {Id}", typeof(T).Name, id);
         return await _context.Set<T>().FindAsync(id);
     }
 
@@ -50,6 +57,7 @@ public class BaseRepository<T>(AppDbContext _context) : IBaseRepository<T> where
         Expression<Func<T, bool>> criteria,
         params Expression<Func<T, object>>[] includes)
     {
+        _logger.LogTrace("Finding entity of type {EntityType} with criteria", typeof(T).Name);
         IQueryable<T> query = _context.Set<T>().Where(criteria);
 
         if (includes != null)
@@ -64,11 +72,12 @@ public class BaseRepository<T>(AppDbContext _context) : IBaseRepository<T> where
     }
 
     public async Task<TResult> FindWithSelectionAsync<TResult>(
-        Expression<Func<T, TResult>> selector,
         Expression<Func<T, bool>> criteria,
         params Expression<Func<T, object>>[] includes)
     {
-        IQueryable<T> query = _context.Set<T>().Where(criteria);
+        IQueryable<T> query = _context.Set<T>();
+
+        query = query.Where(criteria);
 
         if (includes != null)
         {
@@ -78,7 +87,8 @@ public class BaseRepository<T>(AppDbContext _context) : IBaseRepository<T> where
             }
         }
 
-        return await query.Select(selector).SingleOrDefaultAsync();
+        var projectedQuery = query.ProjectToType<TResult>();
+        return await projectedQuery.FirstOrDefaultAsync();
     }
 
     #endregion
@@ -96,12 +106,11 @@ public class BaseRepository<T>(AppDbContext _context) : IBaseRepository<T> where
 
     public async Task<List<TResult>> GetAllDataWithSelectionAsync<TResult>(
         Expression<Func<T, object>> orderBy,
-        Expression<Func<T, TResult>> selector,
         Expression<Func<T, bool>>? criteria = null,
         params Expression<Func<T, object>>[] includes)
     {
         var query = BuildQuery(orderBy, criteria, includes);
-        var projectedQuery = query.Select(selector);
+        var projectedQuery = query.ProjectToType<TResult>();
 
         return await projectedQuery.ToListAsync();
     }
@@ -115,22 +124,16 @@ public class BaseRepository<T>(AppDbContext _context) : IBaseRepository<T> where
     {
         var query = BuildQuery(orderBy, criteria, includes);
 
-        var totalItems = await query.CountAsync();
+        var totalRecords = await query.CountAsync();
         var items = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
-        return new PagedResult<T>
-        (
-            pageSize: pageSize,
-            pageNumber: pageNumber,
-            totalItems: totalItems,
-            items: items
-        );
+        return PagedResult<T>.Create(totalRecords, pageNumber, pageSize, items);
+
 
     }
 
     public async Task<PagedResult<TResult>> GetPagedDataWithSelectionAsync<TResult>(
         Expression<Func<T, object>> orderBy,
-        Expression<Func<T, TResult>> selector,
         Expression<Func<T, bool>>? criteria = null,
         int pageNumber = 1,
         int pageSize = 10,
@@ -138,19 +141,14 @@ public class BaseRepository<T>(AppDbContext _context) : IBaseRepository<T> where
     {
         var query = BuildQuery(orderBy, criteria, includes);
 
-        var totalItems = await query.CountAsync();
+        var totalRecords = await query.CountAsync();
 
-        var projectedQuery = query.Select(selector);
+        var projectedQuery = query.ProjectToType<TResult>();
 
         var items = await projectedQuery.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
-        return new PagedResult<TResult>
-        (
-            pageSize: pageSize,
-            pageNumber: pageNumber,
-            totalItems: totalItems,
-            items: items
-        );
+        return PagedResult<TResult>.Create(pageSize, pageNumber, totalRecords, items);
+
 
     }
 
@@ -160,6 +158,7 @@ public class BaseRepository<T>(AppDbContext _context) : IBaseRepository<T> where
 
     public async Task<T> AddAsync(T entity)
     {
+        _logger.LogDebug("Adding entity of type {EntityType}", typeof(T).Name);
         await _context.Set<T>().AddAsync(entity);
         return entity;
     }
@@ -176,6 +175,7 @@ public class BaseRepository<T>(AppDbContext _context) : IBaseRepository<T> where
 
     public T Update(T entity)
     {
+        _logger.LogDebug("Updating entity of type {EntityType}", typeof(T).Name);
         _context.Update(entity);
         return entity;
     }
@@ -184,12 +184,14 @@ public class BaseRepository<T>(AppDbContext _context) : IBaseRepository<T> where
 
     #region Delete Methods
 
-    public void Delete(T entity)
+    public async Task DeleteAsync(T entity)
     {
+        _logger.LogDebug("Deleting entity of type {EntityType}", typeof(T).Name);
         if (entity is ISoftDeletable softDeletableEntity)
         {
             softDeletableEntity.IsDeleted = true;
             softDeletableEntity.DeletedDate = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
         }
         else
         {

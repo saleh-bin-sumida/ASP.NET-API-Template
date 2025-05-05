@@ -15,7 +15,6 @@ public interface IBaseRepository<T> where T : class
         params Expression<Func<T, object>>[] includes);
 
     Task<TResult> FindWithSelectionAsync<TResult>(
-        Expression<Func<T, TResult>> selector,
         Expression<Func<T, bool>> criteria,
         params Expression<Func<T, object>>[] includes);
     #endregion
@@ -28,7 +27,6 @@ public interface IBaseRepository<T> where T : class
 
     Task<List<TResult>> GetAllDataWithSelectionAsync<TResult>(
         Expression<Func<T, object>> orderBy,
-        Expression<Func<T, TResult>> selector,
         Expression<Func<T, bool>>? criteria = null,
         params Expression<Func<T, object>>[] includes);
 
@@ -41,7 +39,6 @@ public interface IBaseRepository<T> where T : class
 
     Task<PagedResult<TResult>> GetPagedDataWithSelectionAsync<TResult>(
         Expression<Func<T, object>> orderBy,
-        Expression<Func<T, TResult>> selector,
         Expression<Func<T, bool>>? criteria = null,
         int pageNumber = 1,
         int pageSize = 10,
@@ -58,7 +55,7 @@ public interface IBaseRepository<T> where T : class
     #endregion
 
     #region Delete Methods
-    void Delete(T entity);
+    Task DeleteAsync(T entity);
     System.Threading.Tasks.Task DeleteRange(IEnumerable<T> entities);
     #endregion
 

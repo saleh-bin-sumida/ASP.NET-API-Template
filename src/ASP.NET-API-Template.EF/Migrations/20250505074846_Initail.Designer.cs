@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASP.NET_API_Template.EF.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250316214430_Initial")]
-    partial class Initial
+    [Migration("20250505074846_Initail")]
+    partial class Initail
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,13 +44,18 @@ namespace ASP.NET_API_Template.EF.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("FullName")
+                    b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -70,8 +75,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 1,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "ahmed@example.com",
-                            FullName = "أحمد محمد",
+                            FirstName = "أحمد محمد",
                             IsDeleted = false,
+                            LastName = "محمد",
                             PhoneNumber = "1121456789"
                         },
                         new
@@ -79,8 +85,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 2,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "sara@example.com",
-                            FullName = "سارة علي",
+                            FirstName = "سارة ",
                             IsDeleted = false,
+                            LastName = "سارة علي",
                             PhoneNumber = "2927654321"
                         },
                         new
@@ -88,8 +95,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 3,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "mohamed@example.com",
-                            FullName = "محمد حسن",
+                            FirstName = "محمد حسن",
                             IsDeleted = false,
+                            LastName = "محمد حسن",
                             PhoneNumber = "31128833445"
                         },
                         new
@@ -97,8 +105,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 4,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "leila@example.com",
-                            FullName = "ليلى إبراهيم",
+                            FirstName = "ليلى إبراهيم",
                             IsDeleted = false,
+                            LastName = "ليلى إبراهيم",
                             PhoneNumber = "4243344556"
                         },
                         new
@@ -106,8 +115,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 5,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "ali@example.com",
-                            FullName = "علي يوسف",
+                            FirstName = "علي يوسف",
                             IsDeleted = false,
+                            LastName = "علي يوسف",
                             PhoneNumber = "0344455667"
                         },
                         new
@@ -115,8 +125,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 6,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "fatima@example.com",
-                            FullName = "فاطمة سعيد",
+                            FirstName = "فاطمة سعيد",
                             IsDeleted = false,
+                            LastName = "فاطمة سعيد",
                             PhoneNumber = "5445566778"
                         },
                         new
@@ -124,8 +135,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 7,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "khaled@example.com",
-                            FullName = "خالد عبد الله",
+                            FirstName = "خالد عبد الله",
                             IsDeleted = false,
+                            LastName = "خالد عبد الله",
                             PhoneNumber = "6556677889"
                         },
                         new
@@ -133,8 +145,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 8,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "mariam@example.com",
-                            FullName = "مريم أحمد",
+                            FirstName = "مريم أحمد",
                             IsDeleted = false,
+                            LastName = "مريم أحمد",
                             PhoneNumber = "7667788990"
                         },
                         new
@@ -142,8 +155,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 9,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "youssef@example.com",
-                            FullName = "يوسف علي",
+                            FirstName = "يوسف علي",
                             IsDeleted = false,
+                            LastName = "يوسف علي",
                             PhoneNumber = "0878899001"
                         },
                         new
@@ -151,8 +165,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 10,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "nora@example.com",
-                            FullName = "نورا محمد",
+                            FirstName = "نورا محمد",
                             IsDeleted = false,
+                            LastName = "نورا محمد",
                             PhoneNumber = "9889900112"
                         },
                         new
@@ -160,8 +175,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 11,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "hassan@example.com",
-                            FullName = "حسن علي",
+                            FirstName = "حسن علي",
                             IsDeleted = false,
+                            LastName = "حسن علي",
                             PhoneNumber = "14490011223"
                         },
                         new
@@ -169,8 +185,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 12,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "mona@example.com",
-                            FullName = "منى سعيد",
+                            FirstName = "منى سعيد",
                             IsDeleted = false,
+                            LastName = "منى سعيد",
                             PhoneNumber = "01022122334"
                         },
                         new
@@ -178,8 +195,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 13,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "omar@example.com",
-                            FullName = "عمر خالد",
+                            FirstName = "عمر خالد",
                             IsDeleted = false,
+                            LastName = "عمر خالد",
                             PhoneNumber = "01112233445"
                         },
                         new
@@ -187,8 +205,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 14,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "huda@example.com",
-                            FullName = "هدى إبراهيم",
+                            FirstName = "هدى إبراهيم",
                             IsDeleted = false,
+                            LastName = "هدى إبراهيم",
                             PhoneNumber = "2223344556"
                         },
                         new
@@ -196,8 +215,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 15,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "yasser@example.com",
-                            FullName = "ياسر يوسف",
+                            FirstName = "ياسر يوسف",
                             IsDeleted = false,
+                            LastName = "ياسر يوسف",
                             PhoneNumber = "03744455667"
                         },
                         new
@@ -205,8 +225,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 16,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "nadia@example.com",
-                            FullName = "نادية سعيد",
+                            FirstName = "نادية سعيد",
                             IsDeleted = false,
+                            LastName = "نادية سعيد",
                             PhoneNumber = "0045566778"
                         },
                         new
@@ -214,8 +235,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 17,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "majed@example.com",
-                            FullName = "ماجد عبد الله",
+                            FirstName = "ماجد عبد الله",
                             IsDeleted = false,
+                            LastName = "ماجد عبد الله",
                             PhoneNumber = "9956677889"
                         },
                         new
@@ -223,8 +245,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 18,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "salma@example.com",
-                            FullName = "سلمى أحمد",
+                            FirstName = "سلمى أحمد",
                             IsDeleted = false,
+                            LastName = "سلمى أحمد",
                             PhoneNumber = "0667788990"
                         },
                         new
@@ -232,8 +255,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 19,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "ziad@example.com",
-                            FullName = "زياد علي",
+                            FirstName = "زياد علي",
                             IsDeleted = false,
+                            LastName = "زياد علي",
                             PhoneNumber = "0228899001"
                         },
                         new
@@ -241,8 +265,9 @@ namespace ASP.NET_API_Template.EF.Migrations
                             Id = 20,
                             CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "noor@example.com",
-                            FullName = "نور محمد",
+                            FirstName = "نور محمد",
                             IsDeleted = false,
+                            LastName = "نور محمد",
                             PhoneNumber = "0874900112"
                         });
                 });

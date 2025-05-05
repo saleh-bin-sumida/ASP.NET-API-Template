@@ -1,13 +1,22 @@
 ﻿namespace ASP.NET_API_Template.Core.Interfaces;
 
-public interface IStudentRepository : IBaseRepository<Student>
+public interface IStudentRepository
 {
-    public Task<StudentDto> GetStudentById(int id);
-    public Task<PagedResult<StudentDto>> GetAllStudents(
-        int pageNumber,
+    Task<BaseResponse<PagedResult<StudentDto>>> GetPagedStudents(
         int pageSize,
-        string? searchTerm = null);
-    public Task<BaseResponse<string>> AddStudentAsync(AddStudentDto clientDto);
-    public Task<BaseResponse<string>> UpdateStudentAsync(UpdateStudentDto clientDto);
-    public Task<BaseResponse<string>> DeleteStudentAsync(int id);
+        int pageNumber,
+        string searchTerm);
+
+    Task<BaseResponse<StudentDto>> GetStudentById(int id);
+
+
+    Task<BaseResponse<string>> AddStudentAsync(AddStudentDto studentDto);
+
+
+    Task<BaseResponse<string>> UpdateStudentAsync(int id, UpdateStudentDto studentDto);
+
+
+
+    Task<BaseResponse<string>> DeleteStudentAsync(int id);
+
 }

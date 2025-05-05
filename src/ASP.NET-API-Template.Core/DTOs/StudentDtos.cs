@@ -6,7 +6,6 @@ public class StudentDto
     public string FullName { get; set; }
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
-    public string ClientType { get; set; }
 }
 
 public class AddStudentDto

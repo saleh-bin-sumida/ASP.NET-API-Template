@@ -21,11 +21,10 @@ public class BaseResponse<T>
         Errors = errors;
     }
 
+    public BaseResponse()
+    {
 
-    //public PagedResult()
-    //{
-
-    //}
+    }
 
     public static BaseResponse<T> SuccessResponse(string message = "Operation successful", T? data = default)
     {

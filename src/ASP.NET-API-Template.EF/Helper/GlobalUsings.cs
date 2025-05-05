@@ -1,15 +1,12 @@
 ﻿global using ASP.NET_API_Template.Core.Constants;
 global using ASP.NET_API_Template.Core.Entites;
 global using ASP.NET_API_Template.Core.Interfaces;
-global using ASP.NET_API_Template.Core.Mapping;
 global using ASP.NET_API_Template.Core.Models.Response;
 global using ASP.NET_API_Template.EF.Data;
 global using ASP.NET_API_Template.EF.Data.Seading;
-global using ASP.NET_API_Template.EF.Extensions;
 global using ASP.NET_API_Template.EF.Repositories;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
-global using RepositoryWithUWO.EF.Repositories;
 global using System.Linq.Expressions;
