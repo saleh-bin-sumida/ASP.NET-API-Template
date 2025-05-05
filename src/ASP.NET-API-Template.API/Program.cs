@@ -4,9 +4,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersServices();
 builder.Services.AddOpenApiServices();
-builder.Services.AddSwaggerServices();
+
 builder.Services.AddEFServices(builder.Configuration);
-builder.Services.AddCoreServices();
 var app = builder.Build();
 
 app.UseOpenApiAndScalar();
