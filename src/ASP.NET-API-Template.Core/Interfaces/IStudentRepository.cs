@@ -2,8 +2,8 @@
 
 public interface IStudentRepository : IBaseRepository<Student>
 {
-    public Task<GetStudentDto> GetStudentById(int id);
-    public Task<PagedResult<GetStudentDto>> GetAllStudents(
+    public Task<StudentDto> GetStudentById(int id);
+    public Task<PagedResult<StudentDto>> GetAllStudents(
         int pageNumber,
         int pageSize,
         string? searchTerm = null);

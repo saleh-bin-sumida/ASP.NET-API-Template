@@ -19,7 +19,7 @@ public class StudentsController(IUnitOfWork _unitOfWork) : ControllerBase
     /// </remarks>
     /// <returns>قائمة الطلاب</returns>
     [HttpGet(SystemApiRouts.Students.GetAll)]
-    [ProducesResponseType(typeof(BaseResponse<PagedResult<GetStudentDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResponse<PagedResult<StudentDto>>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllStudents(
         int pageNumber = 1,
         [Range(1, 50)] int pageSize = 10,
@@ -30,7 +30,7 @@ public class StudentsController(IUnitOfWork _unitOfWork) : ControllerBase
             return NotFound(BaseResponse<string>.ErrorResponse("لم يتم العثور على الطلاب"));
 
 
-        return Ok(BaseResponse<PagedResult<GetStudentDto>>
+        return Ok(BaseResponse<PagedResult<StudentDto>>
             .SuccessResponse("تم جلب الطلاب بنجاح", result));
     }
 
@@ -41,8 +41,8 @@ public class StudentsController(IUnitOfWork _unitOfWork) : ControllerBase
     /// <param name="Id">معرف الطالب</param>
     /// <returns>تفاصيل الطالب</returns>
     [HttpGet(SystemApiRouts.Students.GetById)]
-    [ProducesResponseType(typeof(BaseResponse<GetStudentDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(BaseResponse<GetStudentDto>), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(BaseResponse<StudentDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BaseResponse<StudentDto>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetStudentById(int Id)
     {
         var result = await _unitOfWork.Students.GetStudentById(Id);
@@ -50,7 +50,7 @@ public class StudentsController(IUnitOfWork _unitOfWork) : ControllerBase
             return NotFound(BaseResponse<string>.ErrorResponse("لم يتم العثور على الطلاب"));
 
 
-        return Ok(BaseResponse<GetStudentDto>.SuccessResponse("تم جلب الطالب بنجاح", result));
+        return Ok(BaseResponse<StudentDto>.SuccessResponse("تم جلب الطالب بنجاح", result));
     }
 
     /// <summary>

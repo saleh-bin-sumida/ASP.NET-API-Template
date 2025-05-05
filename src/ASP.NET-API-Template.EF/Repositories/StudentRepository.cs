@@ -4,14 +4,14 @@ namespace ASP.NET_API_Template.EF.Repositories;
 
 public class StudentRepository(AppDbContext _context) : BaseRepository<Student>(_context), IStudentRepository
 {
-    public async Task<GetStudentDto> GetStudentById(int id)
+    public async Task<StudentDto> GetStudentById(int id)
     {
         return await FindWithSelectionAsync(
             selector: StudentProfile.ToGetStudentDto(),
             criteria: x => x.Id == id);
     }
 
-    public async Task<PagedResult<GetStudentDto>> GetAllStudents(
+    public async Task<PagedResult<StudentDto>> GetAllStudents(
         int pageNumber = 1,
         int pageSize = 10,
         string? searchTerm = null)

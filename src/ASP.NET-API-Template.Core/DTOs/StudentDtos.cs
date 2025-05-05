@@ -1,6 +1,6 @@
 ﻿namespace ASP.NET_API_Template.Core.DTOs;
 
-public class GetStudentDto
+public class StudentDto
 {
     public int Id { get; set; }
     public string FullName { get; set; }
@@ -11,7 +11,8 @@ public class GetStudentDto
 
 public class AddStudentDto
 {
-    public required string FullName { get; set; }
+    public required string FirstName { get; set; }
+    public required string LastName { get; set; }
 
     [EmailAddress]
     public string Email { get; set; }
@@ -24,8 +25,8 @@ public class UpdateStudentDto
 {
     public int Id { get; set; }
 
-    public required string FullName { get; set; }
-
+    public required string FirstName { get; set; }
+    public required string LastName { get; set; }
     [EmailAddress]
     public string Email { get; set; }
 
