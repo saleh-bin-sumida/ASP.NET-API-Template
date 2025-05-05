@@ -119,16 +119,13 @@ public class BaseRepository<T>(AppDbContext _context) : IBaseRepository<T> where
         var items = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
         return new PagedResult<T>
-        {
-            CurrentPage = pageNumber,
-            PageSize = pageSize,
-            TotalItems = totalItems,
-            Items = items,
-            TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize)
-        };
+        (
+            pageSize: pageSize,
+            pageNumber: pageNumber,
+            totalItems: totalItems,
+            items: items
+        );
 
-
-        //return await PagedResult<T>.ToPagedResult(query, pageSize, pageNumber);
     }
 
     public async Task<PagedResult<TResult>> GetPagedDataWithSelectionAsync<TResult>(
@@ -148,13 +145,12 @@ public class BaseRepository<T>(AppDbContext _context) : IBaseRepository<T> where
         var items = await projectedQuery.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
         return new PagedResult<TResult>
-        {
-            CurrentPage = pageNumber,
-            PageSize = pageSize,
-            TotalItems = totalItems,
-            Items = items,
-            TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize)
-        };
+        (
+            pageSize: pageSize,
+            pageNumber: pageNumber,
+            totalItems: totalItems,
+            items: items
+        );
 
     }
 
