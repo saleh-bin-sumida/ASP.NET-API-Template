@@ -25,8 +25,8 @@ public class BaseResponse<T>
         return new BaseResponse<T>(true, message, data);
     }
 
-    public static BaseResponse<T> ErrorResponse(string message, List<string>? errors = null, T? data = default)
+    public static BaseResponse<T> ErrorResponse(string message, List<string>? errors = null)
     {
-        return new BaseResponse<T>(false, message, data, errors);
+        return new BaseResponse<T>(false, message, default, errors);
     }
 }

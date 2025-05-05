@@ -43,28 +43,22 @@ public class StudentRepository(AppDbContext _context) : BaseRepository<Student>(
         await AddAsync(newStudent);
         await _context.SaveChangesAsync();
 
-        return new BaseResponse<string>
-        {
-            Success = true,
-            Message = "تم إضافة الطالب بنجاح"
-        };
+        return BaseResponse<string>.SuccessResponse("تم إضافة الطالب بنجاح");
+
     }
 
     public async Task<BaseResponse<string>> UpdateStudentAsync(UpdateStudentDto studentDto)
     {
         var student = await GetByIdAsync(studentDto.Id);
         if (student is null)
-            return new BaseResponse<string> { Success = false, Message = "الطالب غير موجود" };
+            return BaseResponse<string>.SuccessResponse("الطالب غير موجود");
 
 
         student.UpdateStudent(studentDto);
         await _context.SaveChangesAsync();
 
-        return new BaseResponse<string>
-        {
-            Success = true,
-            Message = "تم تحديث الطالب بنجاح"
-        };
+        return BaseResponse<string>.SuccessResponse("تم تحديث الطالب بنجاح");
+
     }
 
 
@@ -72,22 +66,12 @@ public class StudentRepository(AppDbContext _context) : BaseRepository<Student>(
     {
         var student = await GetByIdAsync(id);
         if (student is null)
-        {
-            return new BaseResponse<string>
-            {
-                Success = false,
-                Message = "الطالب غير موجود"
-            };
-        }
+            return BaseResponse<string>.SuccessResponse("الطالب غير موجود");
 
         Delete(student);
         await _context.SaveChangesAsync();
 
-        return new BaseResponse<string>
-        {
-            Success = true,
-            Message = "تم حذف الطالب بنجاح"
-        };
+        return BaseResponse<string>.SuccessResponse("تم حذف الطالب بنجاح");
     }
 
 
