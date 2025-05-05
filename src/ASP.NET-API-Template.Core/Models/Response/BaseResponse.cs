@@ -12,6 +12,7 @@ public class BaseResponse<T>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<string>? Errors { get; set; }
 
+
     public BaseResponse(bool success, string message, T? data = default, List<string>? errors = null)
     {
         Success = success;
@@ -19,6 +20,12 @@ public class BaseResponse<T>
         Data = data;
         Errors = errors;
     }
+
+
+    //public PagedResult()
+    //{
+
+    //}
 
     public static BaseResponse<T> SuccessResponse(string message = "Operation successful", T? data = default)
     {
