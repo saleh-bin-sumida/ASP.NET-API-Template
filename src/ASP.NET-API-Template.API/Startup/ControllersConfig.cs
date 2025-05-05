@@ -16,19 +16,14 @@ public static class ControllersConfig
             {
                 options.InvalidModelStateResponseFactory = context =>
                 {
-                    // Extract validation errors from the ModelState
                     var errors = context.ModelState
                         .Where(e => e.Value.Errors.Count > 0)
                         .SelectMany(kvp => kvp.Value.Errors.Select(e => e.ErrorMessage))
                         .ToList();
-                    // Create a BaseResponse<object> for the 400 Bad Request response
-                    var response = new BaseResponse<object>
-                    {
-                        Success = false,
-                        Message = "One or more validation errors occurred.",
-                        Errors = errors
-                    };
-                    // Return a BadRequestObjectResult with the custom response
+
+                    var response = BaseResponse<object>
+                    .ErrorResponse("One or more validation errors occurred.", errors);
+
                     return new BadRequestObjectResult(response)
                     {
                         ContentTypes = { "application/json" }

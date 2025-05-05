@@ -28,12 +28,9 @@ public class ExceptionHandlingMiddleware
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-        var response = new BaseResponse<object>
-        {
-            Success = false,
-            Message = "An unexpected error occurred. Please try again later.",
-            Errors = new List<string> { exception.Message }
-        };
+        var response = BaseResponse<object>
+            .ErrorResponse("An unexpected error occurred. Please try again later.",
+            new List<string> { exception.Message });
 
         return context.Response.WriteAsJsonAsync(response);
     }

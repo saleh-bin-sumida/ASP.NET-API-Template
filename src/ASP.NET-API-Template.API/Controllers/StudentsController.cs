@@ -18,7 +18,7 @@ public class StudentsController(IUnitOfWork _unitOfWork) : ControllerBase
     /// في حالة لم يتم تحديد نص بحثي او نوع الطالب سيم الجلب حسب الصفحات    
     /// </remarks>
     /// <returns>قائمة الطلاب</returns>
-    [HttpGet(SystemApiRouts.Students.GetAllCleint)]
+    [HttpGet(SystemApiRouts.Students.GetAll)]
     [ProducesResponseType(typeof(BaseResponse<PagedResult<GetStudentDto>>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllStudents(
         int pageNumber = 1,
@@ -27,20 +27,11 @@ public class StudentsController(IUnitOfWork _unitOfWork) : ControllerBase
     {
         var result = await _unitOfWork.Students.GetAllStudents(pageNumber, pageSize, searchTerm);
         if (result.Items == null || result.Items.Count == 0)
-        {
-            return NotFound(new BaseResponse<PagedResult<GetStudentDto>>
-            {
-                Success = false,
-                Message = "لم يتم العثور على الطلاب",
-            });
-        }
+            return NotFound(BaseResponse<string>.ErrorResponse("لم يتم العثور على الطلاب"));
 
-        return Ok(new BaseResponse<PagedResult<GetStudentDto>>
-        {
-            Success = true,
-            Message = "تم جلب الطلاب بنجاح",
-            Data = result,
-        });
+
+        return Ok(BaseResponse<PagedResult<GetStudentDto>>
+            .SuccessResponse("تم جلب الطلاب بنجاح", result));
     }
 
 
@@ -49,32 +40,24 @@ public class StudentsController(IUnitOfWork _unitOfWork) : ControllerBase
     /// </summary>
     /// <param name="Id">معرف الطالب</param>
     /// <returns>تفاصيل الطالب</returns>
-    [HttpGet(SystemApiRouts.Students.GetStudentById)]
+    [HttpGet(SystemApiRouts.Students.GetById)]
     [ProducesResponseType(typeof(BaseResponse<GetStudentDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BaseResponse<GetStudentDto>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetStudentById(int Id)
     {
         var result = await _unitOfWork.Students.GetStudentById(Id);
         if (result is null)
-            return NotFound(new BaseResponse<GetStudentDto>()
-            {
-                Success = false,
-                Message = "لا يوجد طالب بهذا المعرف"
-            });
+            return NotFound(BaseResponse<string>.ErrorResponse("لم يتم العثور على الطلاب"));
 
-        return Ok(new BaseResponse<GetStudentDto>()
-        {
-            Success = true,
-            Message = "تم جلب الطالب بنجاح",
-            Data = result
-        });
+
+        return Ok(BaseResponse<GetStudentDto>.SuccessResponse("تم جلب الطالب بنجاح", result));
     }
 
     /// <summary>
     /// إنشاء طالب جديد
     /// </summary>
     /// </remarks>
-    [HttpPost(SystemApiRouts.Students.AddStudent)]
+    [HttpPost(SystemApiRouts.Students.Add)]
     [ProducesResponseType(typeof(BaseResponse<string>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BaseResponse<string>), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateStudent(AddStudentDto client)
@@ -95,7 +78,7 @@ public class StudentsController(IUnitOfWork _unitOfWork) : ControllerBase
     /// تحديث طالب موجود
     /// </summary>
     /// <returns>لا يوجد محتوى</returns>
-    [HttpPut(SystemApiRouts.Students.UpdateStudent)]
+    [HttpPut(SystemApiRouts.Students.Update)]
     [ProducesResponseType(typeof(BaseResponse<string>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BaseResponse<string>), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateStudent(UpdateStudentDto client)
@@ -116,7 +99,7 @@ public class StudentsController(IUnitOfWork _unitOfWork) : ControllerBase
     /// </summary>
     /// <param name="Id">معرف الطالب</param>
     /// <returns>لا يوجد محتوى</returns>
-    [HttpDelete(SystemApiRouts.Students.DeleteStudent)]
+    [HttpDelete(SystemApiRouts.Students.Delete)]
     [ProducesResponseType(typeof(BaseResponse<string>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BaseResponse<string>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(BaseResponse<string>), StatusCodes.Status404NotFound)]
